@@ -10,23 +10,23 @@ class DAO:
                         "cd_tipo_contato INT PRIMARY KEY,"+
                         "nm_tipo_contato VARCHAR(100));")
         self.conexao.execute(
-                "CREATE TABLE IF NOT EXISTS tb_usuario("+
-                        "cd_usuario INT PRIMARY KEY,"+
-                        "nm_usuario VARCHAR(100));")
+                    "CREATE TABLE IF NOT EXISTS tb_pessoa("+
+                        "cd_pessoa INT PRIMARY KEY,"+
+                        "nm_pessoa VARCHAR(100));")
         self.conexao.execute(           
                     "CREATE TABLE IF NOT EXISTS tb_conta("+
                         "cd_contato INT PRIMARY KEY,"+
                         "ds_contato varchar(100),"+
                         "cd_tipo_contato int,"+
-                        "cd_usuario int,"+
+                        "cd_pessoa int,"+
                         "FOREIGN KEY(cd_tipo_contato) references tb_tipo_contato(cd_tipo_contato),"+
-                        "FOREIGN KEY(cd_usuario) references tb_usuario(cd_usuario)"+
+                        "FOREIGN KEY(cd_pessoa) references tb_pessoa(cd_pessoa)"+
                     ");")
 
     def inserirTiposContatos(self):
-        self.conexao.execute("insert into tb_tipo_contato values (0, 'Telefone')"):
-        self.conexao.execute("insert into tb_tipo_contato values (1, 'Celular')"):
-        self.conexao.execute("insert into tb_tipo_contato values (2, 'Email')"):
+        self.conexao.execute("insert into tb_tipo_contato values (0, 'Telefone')")
+        self.conexao.execute("insert into tb_tipo_contato values (1, 'Celular')")
+        self.conexao.execute("insert into tb_tipo_contato values (2, 'Email')")
         
 
         
@@ -41,25 +41,6 @@ class Contato:
         self.nome = nome
         self.numero = numero        
         self.tipoContato = TipoContato()
-
-class Usuario:
-    def __init__(self, codigo, nome, contatos:List, agenda:Agenda)
-        self.codigo = codigo
-        self.nome = nome
-        self.contatos = contatos
-        self.agenda = agenda
-
-    def criarUsuario:
-        pass
-
-    def alterarUsuario:
-        pass
-
-    def deletarUsuario:
-        pass
-
-        
-        
         
 class Agenda(DAO):
     def __init__(self):
@@ -71,7 +52,7 @@ class Agenda(DAO):
         self.conexao.commit()
         pass
 
-    def deletaContatos():
+    def deletaContatos(self):
         pass
 
     def selecionaContatos(self, nome):
@@ -81,10 +62,26 @@ class Agenda(DAO):
 
     def atualizaContatos():
         pass
+    
+class Pessoa(DAO):
+    def __init__(self, codigo, nome, contatos, agenda:Agenda):
+        super().__init__()
+        self.codigo = codigo
+        self.nome = nome
+        self.contatos = contatos
+        self.agenda = agenda
 
+    def criarPessoa(self):
+        pass
 
+    def alterarPessoa(self):
+        pass
 
+    def deletarPessoa(self):
+        pass
 
+    def selecionarPessoas(self,nome):
+        pass
 
 class Sistema:
     def __init__(self):
