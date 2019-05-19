@@ -1,15 +1,17 @@
 from Model.DTO.PessoaDTO import PessoaDTO
 from Model.DTO.ContatoDTO import ContatoDTO
+import os
 
 class PessoaView:
     def __init__(self):
         self.mensagem = "*                                                              *"
 
     def inicio(self, pessoa:PessoaDTO):
+        os.system("cls")
         print("****************************************************************")
-        print("*{}\t\t\t\t\t\t\t\t*".format(pessoa.nome))
+        print("*{}\t\t\t\t\t\t\t*".format(pessoa.nome))
         print("*--------------------------------------------------------------*")
-        print("*Codigo\t|Contato\t\t| Tipo do Contato\t*")
+        print("*Codigo\t|Contato\t\t| Tipo do Contato\t      *")
         for contato in pessoa.contatos:
             print("*{}\t|{}\t\t|{}\t*".format(contato.codigo, contato.numero, contato.tipoContato.nome))
         print("*                                                              *")
@@ -20,7 +22,8 @@ class PessoaView:
         print("*1 - Adicionar contato                                         *")
         print("*2 - Alterar contato                                           *")
         print("*3 - Deletar contato                                           *")
-        print("*999 - Voltar para a agenda                                    *")
+        print("*4 - Alterar dados Pessoais                                    *")
+        print("*5 - Voltar para a agenda                                    *")
         print("{}".format(self.mensagem))
         self.mensagem = ""
         opcao = input("*Opção: ")

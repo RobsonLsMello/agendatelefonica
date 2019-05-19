@@ -8,17 +8,45 @@ class PrincipalController:
     def __init__(self):
         principal = PrincipalView()
         agenda = AgendaDAO()
-        pessoaController = PessoaController()
+        sair = False
         opcao = 0
-        while 0 == 0 or opcao == 999:
-            opcao = principal.menu(agenda.selecionaPessoa("", False))
+        while sair == False:
+            pessoas = agenda.selecionaPessoa("", False)
+            principal.mostrarAgenda(pessoas)
+            opcao = principal.menu()
             if opcao == 1:
+                pessoaController = PessoaController()
                 adicionarPessoas = AdicionarPessoasController()
                 agenda.criaPessoa(adicionarPessoas.pessoa)      
                 if adicionarPessoas.continuarCadastroContatosPessoa == True:      
                     pessoaController.index("" ,adicionarPessoas.continuarCadastroContatosPessoa)
-            elif opcao ==2:
-                pessoaController.index(PessoaDTO(0,"", "") ,False)
+            elif opcao == 2:
+                self.procurarPessoasPorCodigo(pessoas, principal)
+            elif opcao == 3:
+                nome = principal.selecionarPessoaPorNome()
+                pessoasPorNome = agenda.selecionaPessoa(nome, False)
+                principal.mostrarAgenda(pessoasPorNome)
+                self.procurarPessoasPorCodigo(pessoas, principal, False)
+            elif opcao == 999:
+                sair = True
+    
+    def procurarPessoasPorCodigo(self, pessoas, principal, mostrarPessoas:bool = True):
+        codigo = "a"                
+        naoTemPessoa = True
+        while(codigo.isalpha() or naoTemPessoa):
+            if(mostrarPessoas):
+                principal.mostrarAgenda(pessoas)
+            codigo = principal.selecionarPessoaPorCodigo()
+            for pessoa in pessoas:
+                if(int(codigo) == int(pessoa.codigo)):
+                    naoTemPessoa = False
+                    break
+            if(codigo.isalpha()):
+                principal.colocarMensagem(1)
+            if(naoTemPessoa):
+                principal.colocarMensagem(2)
+            pessoaController = PessoaController()
+        pessoaController.index(PessoaDTO(codigo,"", "") ,False)
 
                 
             

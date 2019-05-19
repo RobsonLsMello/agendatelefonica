@@ -7,4 +7,4 @@ class ContatoDTO:
         self.codigo = codigo
         self.numero = numero        
         self.tipoContato = TipoContatoDTO(codigoTipo, nomeTipo)
-        self.pessoa = PessoaDTO(codigoTipo, "", "")
+        self.pessoa = PessoaDTO(codigoPessoa, "", "")

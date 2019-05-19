@@ -1,14 +1,18 @@
-
+import os
 
 class AdicionarPessoaView:
     def __init__(self):        
         self.mensagem = "|\t\t\t\t\t      |"
 
-    def formulario(self):
+    def formulario(self, isCadastro:bool = True):
+        os.system("cls")
         print("_______________________________________________")
-        print("|Formulário de cadastro de uma Pessoa:        |")
+        if(isCadastro):
+            print("|Formulário de cadastro de uma Pessoa:        |")
+        else:
+            print("|Formulário de Alteração de uma Pessoa:       |")            
         print("|                                             |")
-        print("|Digite um nome\t\t\t      |")
+        print("|Digite um nome                               |")
         print(self.mensagem)
         nome = input("|Nome: ")
         print("_______________________________________________")   

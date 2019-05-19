@@ -1,5 +1,6 @@
 from Model.DAO.DAO import DAO
 from Model.DTO.ContatoDTO import ContatoDTO
+from Model.DTO.TipoContatoDTO import TipoContatoDTO
 from Model.DTO.PessoaDTO import PessoaDTO
 
 class AgendaDAO(DAO):
@@ -10,9 +11,13 @@ class AgendaDAO(DAO):
         self.conexao.execute("Insert into tb_pessoa select max(cd_pessoa) + 1, \"{}\" from tb_pessoa;".format(pessoa.nome))
         self.conexao.commit()
 
+    def atualizarPessoa(self, pessoa:PessoaDTO):
+        self.conexao.execute("update tb_pessoa set nm_pessoa = \"{}\" where cd_pessoa = \"{}\";".format(pessoa.nome, pessoa.codigo))
+        self.conexao.commit()
+
     def selecionaPessoa(self, nome:str, ultimo:bool, codigo:int = -1):
         if ultimo == False and codigo == -1:
-            pessoasSelecionadas = self.conexao.execute("Select * from tb_pessoa where nm_pessoa like \"%{}%\"".format(nome)).fetchall()
+            pessoasSelecionadas = self.conexao.execute("Select * from tb_pessoa where nm_pessoa like \"%{}%\" order by nm_pessoa".format(nome)).fetchall()
         elif ultimo == False and codigo != -1:
             pessoasSelecionadas = self.conexao.execute("Select * from tb_pessoa where cd_pessoa = {}".format(codigo)).fetchall()
         else:
@@ -24,9 +29,8 @@ class AgendaDAO(DAO):
         
 
     def criaContato(self, contato:ContatoDTO):
-        self.conexao.execute("Insert into tb_contato values (?,?,?,?)", (contato.codigo, contato.numero, contato.tipoContato.codigo, contato.pessoa.codigo))
+        self.conexao.execute("Insert into tb_contato select max(cd_contato) +1, \"{}\", {}, {} from tb_contato".format(contato.numero, contato.tipoContato.codigo, contato.pessoa.codigo))
         self.conexao.commit()
-        pass
 
     def deletaContato(self):
         pass
@@ -41,3 +45,10 @@ class AgendaDAO(DAO):
 
     def atualizaContato(self):
         pass
+
+    def selecionaTiposContato(self):
+        tiposEncontrados = self.conexao.execute("Select cd_tipo_contato, nm_tipo_contato from tb_tipo_contato").fetchall()
+        tipos = []
+        for tipo in tiposEncontrados:
+            tipos.append(TipoContatoDTO(tipo[0], tipo[1]))
+        return tipos
