@@ -2,16 +2,17 @@
 
 class AdicionarPessoaView:
     def __init__(self):        
-        self.mensagem = ""
+        self.mensagem = "|\t\t\t\t\t      |"
 
     def formulario(self):
         print("_______________________________________________")
         print("|Formulário de cadastro de uma Pessoa:        |")
         print("|                                             |")
-        print("|Digite um nome:\t\t\t         |")
+        print("|Digite um nome\t\t\t      |")
         print(self.mensagem)
         nome = input("|Nome: ")
-        print("_______________________________________________")        
+        print("_______________________________________________")   
+        self.mensagem = ""     
         return nome
 
     def posFormulario(self):

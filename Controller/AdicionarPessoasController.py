@@ -1,8 +1,10 @@
 from View.AdicionarPessoaView import AdicionarPessoaView
 from Model.DTO.PessoaDTO import PessoaDTO
 
+
 class AdicionarPessoasController:
     def __init__(self):
+        self.continuarCadastroContatosPessoa = False
         tela = AdicionarPessoaView()
         nome = "1" #setar erro esperado
         while(nome.isalpha() == False or nome == "" or len(nome) > 100):
@@ -20,6 +22,10 @@ class AdicionarPessoasController:
             opcao = tela.posFormulario()
             if(opcao.isalpha()):
                 tela.colocarMensagem(5)
+            else:
+                if(int(opcao) == 0):
+                    self.continuarCadastroContatosPessoa = True            
             if(opcao.isnumeric() and (int(opcao) <0 or int(opcao) > 1)):
                 tela.colocarMensagem(4)
+            
 
