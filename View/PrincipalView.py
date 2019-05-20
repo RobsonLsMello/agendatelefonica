@@ -14,15 +14,15 @@ class PrincipalView:
 
     def menu(self):        
         opcao = -1
-        print("Você deseja?\n1-Adicionar Pessoas\n2-Selecionar Pessoa\n3-Procurar Pessoa")
-        while(opcao < 0 or opcao > 3):
+        print("Você deseja?\n1-Adicionar Pessoas\n2-Selecionar Pessoa\n3-Procurar Pessoa\n4-Deletar Pessoa\n5-Finalizar programa")
+        while(opcao < 0 or opcao > 5):
             opcao = int(input("Opção: "))
-            if opcao < 0 or opcao > 3:
+            if opcao < 0 or opcao > 5:
                 print("Opção inválida, por favor, digite novamente")
         return opcao
     
     def selecionarPessoaPorCodigo(self):
-        print("Digite o código da pessoa que você quer acessar")
+        print("Digite o código da pessoa que você quer acessar/modificar")
         print(self.mensagem)
         opcao = input("Código: ")
         self.mensagem = ""

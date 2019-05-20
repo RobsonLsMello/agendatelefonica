@@ -26,14 +26,23 @@ class AgendaDAO(DAO):
         for pessoaEncontrada in pessoasSelecionadas:
             pessoas.append(PessoaDTO(pessoaEncontrada[0], pessoaEncontrada[1], ""))
         return pessoas
-        
+    
+    def deletaPessoa(self, pessoa:PessoaDTO):
+        self.conexao.execute("delete from tb_contato where cd_pessoa = \"{}\"".format(pessoa.codigo))
+        self.conexao.execute("delete from tb_pessoa where cd_pessoa = \"{}\"".format(pessoa.codigo))
+        self.conexao.commit()
 
     def criaContato(self, contato:ContatoDTO):
         self.conexao.execute("Insert into tb_contato select max(cd_contato) +1, \"{}\", {}, {} from tb_contato".format(contato.numero, contato.tipoContato.codigo, contato.pessoa.codigo))
         self.conexao.commit()
 
-    def deletaContato(self):
-        pass
+    def alteraContato(self, contato:ContatoDTO):
+        self.conexao.execute("update tb_contato set ds_contato = \"{}\" where cd_contato = \"{}\" ".format(contato.numero, contato.codigo))
+        self.conexao.commit()
+
+    def deletaContato(self, contato:ContatoDTO):
+        self.conexao.execute("delete from tb_contato where cd_contato = \"{}\"".format(contato.codigo))
+        self.conexao.commit()
 
     def selecionaContato(self, pessoa:PessoaDTO):
         contatosSelecionados = self.conexao.execute("Select c.cd_contato, c.ds_contato, t.nm_tipo_contato from tb_contato as c join tb_tipo_contato as t on c.cd_tipo_contato = t.cd_tipo_contato where c.cd_pessoa = {}".format(pessoa.codigo)).fetchall()

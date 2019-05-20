@@ -27,10 +27,13 @@ class PrincipalController:
                 pessoasPorNome = agenda.selecionaPessoa(nome, False)
                 principal.mostrarAgenda(pessoasPorNome)
                 self.procurarPessoasPorCodigo(pessoas, principal, False)
-            elif opcao == 999:
+            elif opcao == 4:
+                codigo = self.procurarPessoasPorCodigo(pessoas, principal, True, True)
+                agenda.deletaPessoa(PessoaDTO(codigo, "",""))
+            elif opcao == 5:
                 sair = True
     
-    def procurarPessoasPorCodigo(self, pessoas, principal, mostrarPessoas:bool = True):
+    def procurarPessoasPorCodigo(self, pessoas, principal, mostrarPessoas:bool = True, isDeletar:bool = False):
         codigo = "a"                
         naoTemPessoa = True
         while(codigo.isalpha() or naoTemPessoa):
@@ -45,8 +48,11 @@ class PrincipalController:
                 principal.colocarMensagem(1)
             if(naoTemPessoa):
                 principal.colocarMensagem(2)
+        if(isDeletar == False):
             pessoaController = PessoaController()
-        pessoaController.index(PessoaDTO(codigo,"", "") ,False)
+            pessoaController.index(PessoaDTO(codigo,"", "") ,False)
+        return codigo
+
 
                 
             

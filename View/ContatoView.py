@@ -16,6 +16,7 @@ class ContatoView:
             print("|Formulário de Alteração de um Contato:       |")            
         print("|                                             |")
     
+
     def formularioTipoContato(self, tipos:list):
         print("|Selecione o tipo de contato:                 |")
         for tipo in  tipos:

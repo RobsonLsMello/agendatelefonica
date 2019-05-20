@@ -29,10 +29,24 @@ class PessoaView:
         opcao = input("*Opção: ")
         return opcao
 
+    def procurarCodigo(self, isAlteracao:bool = True):
+        if(isAlteracao):
+            print("Digite o número do código do contato para fazer alteração")
+        else:
+            print("Digite o número do código do contato para deletar")
+        print("{}".format(self.mensagem))
+        codigo = input("Código: ")
+        self.mensagem = ""
+        return codigo
+
     def colocarMensagem(self, codigo:int):
         if codigo == 1:
             self.mensagem += "\n\tDigite uma opção númerica"
         elif codigo == 2:
             self.mensagem += "\n\tOpção inválida"
+        elif codigo == 3:
+            self.mensagem += "\n\tCódigo apenas pode ser númerico"
+        elif codigo == 3:
+            self.mensagem += "\n\tCódigo de contato inválido"
         else:
             self.mensagem += "\n\tErro não identificado" 

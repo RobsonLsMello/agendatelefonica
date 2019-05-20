@@ -8,7 +8,7 @@ class ContatoController:
         self.contatoView = ContatoView()
         self.agenda = AgendaDAO()
 
-    def formulario(self,pessoa:PessoaDTO, isCadastro:bool = True):
+    def formulario(self,pessoa:PessoaDTO, isCadastro:bool = True, codigo:int = -1):
         self.contato = ContatoDTO("0", "1", "b", "b", pessoa.codigo) #setar contato com o pior dado possivel para validação
         tipos = self.agenda.selecionaTiposContato()
         #primeiro pedir tipo do contato
@@ -47,13 +47,17 @@ class ContatoController:
                 if(len(self.contato.numero) > 100):
                     self.contatoView.colocarMensagem(8)
                     erroDeFormato = True
-                if(self.contato.numero.find('.com') < -1):
+                if(self.contato.numero.find('.com') == -1):
                     self.contatoView.colocarMensagem(9)
                     erroDeFormato = True
-                if(self.contato.numero.find('@') < -1):
+                if(self.contato.numero.find('@') == -1):
                     self.contatoView.colocarMensagem(10)
-                    erroDeFormato = True
-        self.agenda.criaContato(self.contato)
+                    erroDeFormato = True        
+        if(isCadastro):
+            self.agenda.criaContato(self.contato)
+        else:
+            self.contato.codigo = codigo
+            self.agenda.alteraContato(self.contato)
 
 
         
