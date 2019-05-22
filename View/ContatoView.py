@@ -30,10 +30,22 @@ class ContatoView:
     def formularioNumero(self, tipo:int):
         if int(tipo) == 0:
             print("|Digite um número de telefone                 |")
+            print("|Formato do telefone:                         |")
+            print("|*Sem DDI e DDD                               |")
+            print("|*Com 8 digitos, ex: 00000000                 |")
+            print("|                                             |")
         elif int(tipo) == 1:
             print("|Digite um número de celular                  |")
+            print("|Formato do celular:                          |")
+            print("|*Sem DDI e DDD                               |")
+            print("|*Com 9 digitos, ex: 000000000                |")
+            print("|                                             |")
         elif int(tipo) == 2:
-            print("|Digite um email                              |")
+            print("|Digite um endereço de email                  |")
+            print("|Formato do email:                            |")
+            print("|*Com até 100 caracteres                      |")
+            print("|*ex: seuEmail@dominio.com                    |")
+            print("|                                             |")
         else:
             print("|Digite um dado de contato                    |")
         print(self.mensagem)

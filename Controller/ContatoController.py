@@ -20,13 +20,14 @@ class ContatoController:
             hasCaracteresEspeciais = TextoUtil().verificarTextoComCaracteresEspeciais(self.contato.tipoContato.codigo)
             if(hasCaracteresEspeciais):
                 self.contatoView.colocarMensagem(11)
-            if(self.contato.tipoContato.codigo.isalpha()):
-                self.contatoView.colocarMensagem(1)
             else:
-                if(int(self.contato.tipoContato.codigo) == 0):
-                    self.continuarCadastroContatosPessoa = True            
-            if(self.contato.tipoContato.codigo.isnumeric() and (int(self.contato.tipoContato.codigo) <0 or int(self.contato.tipoContato.codigo) > len(tipos)-1)):
-                self.contatoView.colocarMensagem(2)
+                if(self.contato.tipoContato.codigo.isalpha()):
+                    self.contatoView.colocarMensagem(1)
+                else:
+                    if(int(self.contato.tipoContato.codigo) == 0):
+                        self.continuarCadastroContatosPessoa = True            
+                    if(self.contato.tipoContato.codigo.isnumeric() and (int(self.contato.tipoContato.codigo) <0 or int(self.contato.tipoContato.codigo) > len(tipos)-1)):
+                        self.contatoView.colocarMensagem(2)
         erroDeFormato = True
         while(erroDeFormato or self.contato.numero == ""):
             self.contatoView.formulario(isCadastro)
