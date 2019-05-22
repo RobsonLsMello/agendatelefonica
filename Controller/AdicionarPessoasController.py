@@ -1,5 +1,6 @@
 from View.AdicionarPessoaView import AdicionarPessoaView
 from Model.DTO.PessoaDTO import PessoaDTO
+from Lib.TextoUtil import TextoUtil
 
 
 class AdicionarPessoasController:
@@ -7,14 +8,18 @@ class AdicionarPessoasController:
         self.continuarCadastroContatosPessoa = False
         tela = AdicionarPessoaView()
         nome = "1" #setar erro esperado
-        while(nome.isalpha() == False or nome == "" or len(nome) > 100):
+        hasCaracteresEspeciais = True
+        while(nome.isnumeric() == True or hasCaracteresEspeciais or nome == "" or len(nome) > 100):
             nome = tela.formulario(isCadastro)
-            if(nome.isalpha() == False):
+            if(nome.isnumeric() == True):
                 tela.colocarMensagem(1)
             if(nome == ""):
                 tela.colocarMensagem(2)
             if(len(nome) > 100):
                 tela.colocarMensagem(3)
+            hasCaracteresEspeciais =  TextoUtil().verificarTextoComCaracteresEspeciais(nome)
+            if(hasCaracteresEspeciais):
+                tela.colocarMensagem(6)
         self.pessoa = PessoaDTO(0, nome, "")
         tela.aparecerObservacoes(1)
         opcao = "a"

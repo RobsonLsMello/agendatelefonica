@@ -8,9 +8,10 @@ class PrincipalView:
     def mostrarAgenda(self, agenda):
         os.system("cls")
         print("\t\tAgenda dos MONSTROS\n\n")        
-        print("|Codigo\t|Nome\t\t|\n")
+        print("|Codigo     |Nome{}|".format(" "*96))
+        print("{}".format("-"*(114)))
         for pessoa in agenda:
-            print("|{}\t|{}\t\t|".format(pessoa.codigo, pessoa.nome))
+            print("|{}{}|{}{}|".format(pessoa.codigo," "*(11 - len(str(pessoa.codigo))), pessoa.nome," "*(100 - len(pessoa.nome))))
 
     def menu(self):        
         opcao = -1

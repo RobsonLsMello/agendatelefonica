@@ -39,13 +39,14 @@ class PrincipalController:
         while(codigo.isalpha() or naoTemPessoa):
             if(mostrarPessoas):
                 principal.mostrarAgenda(pessoas)
-            codigo = principal.selecionarPessoaPorCodigo()
-            for pessoa in pessoas:
-                if(int(codigo) == int(pessoa.codigo)):
-                    naoTemPessoa = False
-                    break
+            codigo = principal.selecionarPessoaPorCodigo()            
             if(codigo.isalpha()):
                 principal.colocarMensagem(1)
+            else:
+                for pessoa in pessoas:
+                    if(int(codigo) == int(pessoa.codigo)):
+                        naoTemPessoa = False
+                        break
             if(naoTemPessoa):
                 principal.colocarMensagem(2)
         if(isDeletar == False):

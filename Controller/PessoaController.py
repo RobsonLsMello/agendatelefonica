@@ -46,15 +46,15 @@ class PessoaController:
     def validarCodigo(self, isAlteracao:bool = True):
         codigo = "a"
         naoExisteContato = True
-        while(codigo.isalpha() and naoExisteContato):
+        while(codigo.isalpha() or naoExisteContato):
             codigo = self.view.procurarCodigo(isAlteracao)
             if(codigo.isalpha()):
                 self.view.colocarMensagem(3)
             for contato in self.pessoa.contatos:
-                if(codigo == contato.codigo):
+                if(int(codigo) == contato.codigo):
                     naoExisteContato = False
                     break
             if(naoExisteContato):
-                self.view.colocarMensagem(3)
+                self.view.colocarMensagem(4)
         return codigo
         

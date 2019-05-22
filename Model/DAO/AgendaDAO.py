@@ -37,7 +37,7 @@ class AgendaDAO(DAO):
         self.conexao.commit()
 
     def alteraContato(self, contato:ContatoDTO):
-        self.conexao.execute("update tb_contato set ds_contato = \"{}\" where cd_contato = \"{}\" ".format(contato.numero, contato.codigo))
+        self.conexao.execute("update tb_contato set ds_contato = \"{}\", cd_tipo_contato = \"{}\" where cd_contato = \"{}\" ".format(contato.numero, contato.tipoContato.codigo, contato.codigo))
         self.conexao.commit()
 
     def deletaContato(self, contato:ContatoDTO):
