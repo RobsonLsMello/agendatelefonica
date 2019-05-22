@@ -2,6 +2,7 @@ from Model.DTO.ContatoDTO import ContatoDTO
 from Model.DTO.PessoaDTO import PessoaDTO
 from View.ContatoView import ContatoView
 from Model.DAO.AgendaDAO import AgendaDAO
+from Lib.TextoUtil import TextoUtil
 
 class ContatoController:
     def __init__(self):
@@ -12,9 +13,13 @@ class ContatoController:
         self.contato = ContatoDTO("0", "1", "b", "b", pessoa.codigo) #setar contato com o pior dado possivel para validação
         tipos = self.agenda.selecionaTiposContato()
         #primeiro pedir tipo do contato
-        while(self.contato.tipoContato.codigo.isalpha() or self.contato.tipoContato.codigo == "" or (self.contato.tipoContato.codigo.isnumeric() and (int(self.contato.tipoContato.codigo) <0 or int(self.contato.tipoContato.codigo) > len(tipos) - 1))):
+        hasCaracteresEspeciais = True
+        while(self.contato.tipoContato.codigo.isalpha() or hasCaracteresEspeciais or self.contato.tipoContato.codigo == "" or (self.contato.tipoContato.codigo.isnumeric() and (int(self.contato.tipoContato.codigo) <0 or int(self.contato.tipoContato.codigo) > len(tipos) - 1))):
             self.contatoView.formulario(isCadastro)
             self.contato.tipoContato.codigo = self.contatoView.formularioTipoContato(tipos)
+            hasCaracteresEspeciais = TextoUtil().verificarTextoComCaracteresEspeciais(self.contato.tipoContato.codigo)
+            if(hasCaracteresEspeciais):
+                self.contatoView.colocarMensagem(11)
             if(self.contato.tipoContato.codigo.isalpha()):
                 self.contatoView.colocarMensagem(1)
             else:

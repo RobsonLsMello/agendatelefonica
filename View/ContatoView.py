@@ -63,5 +63,7 @@ class ContatoView:
             self.mensagem += "\n\tUm email precisa conter ao menos 1 \".com\""
         elif codigo == 10:
             self.mensagem += "\n\tUm email precisa conter ao menos 1 \"@\""
+        elif codigo == 11:
+            self.mensagem += "\n\tTipo de Contato não tem Caractere(s) Especial(is)"
         else:
             self.mensagem += "\n\tErro não identificado" 

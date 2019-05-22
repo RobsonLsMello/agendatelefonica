@@ -50,5 +50,7 @@ class PessoaView:
             self.mensagem += "\n\tCódigo apenas pode ser númerico"
         elif codigo == 4:
             self.mensagem += "\n\tCódigo de contato inválido"
+        elif codigo == 5:
+            self.mensagem += "\n\tOpção não tem Caractere(s) Especial(is)"
         else:
             self.mensagem += "\n\tErro não identificado" 

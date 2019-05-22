@@ -16,10 +16,9 @@ class PrincipalView:
     def menu(self):        
         opcao = -1
         print("Você deseja?\n1-Adicionar Pessoas\n2-Selecionar Pessoa\n3-Procurar Pessoa\n4-Deletar Pessoa\n5-Finalizar programa")
-        while(opcao < 0 or opcao > 5):
-            opcao = int(input("Opção: "))
-            if opcao < 0 or opcao > 5:
-                print("Opção inválida, por favor, digite novamente")
+        print(self.mensagem)
+        self.mensagem = ""
+        opcao = input("Opção: ")
         return opcao
     
     def selecionarPessoaPorCodigo(self):
@@ -41,3 +40,11 @@ class PrincipalView:
             self.mensagem += "\nCódigo deve ser númerico\n"
         elif codigo == 2:
             self.mensagem += "\nEsse código não pertecem a pessoa alguma"
+        elif codigo == 3:
+            self.mensagem += "\n\tDigite uma opção númerica"
+        elif codigo == 4:
+            self.mensagem += "\n\tOpção inválida"
+        elif codigo == 5:
+            self.mensagem += "\n\tOpção não tem Caractere(s) Especial(is)"
+        else:
+            self.mensagem += "\n\tErro não identificado"
