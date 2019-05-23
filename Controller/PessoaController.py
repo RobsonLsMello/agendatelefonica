@@ -15,8 +15,9 @@ class PessoaController:
         sair = False
         while(sair == False):    
             opcao = "a"   
-            hasCaracteresEspeciais = True     
-            while(opcao.isalpha() or hasCaracteresEspeciais or (opcao.isnumeric() and (int(opcao) <1 or int(opcao) > 5))):
+            hasCaracteresEspeciais = True  
+            hasCaracteresAlpha = True   
+            while(opcao.isalpha() or opcao == "" or hasCaracteresEspeciais or hasCaracteresAlpha or (opcao.isnumeric() and (int(opcao) <1 or int(opcao) > 5))):
                 if(continuarCadastroContatosPessoa):
                     self.pessoa = self.agenda.selecionaContato(self.agenda.selecionaPessoa("", True)[0])
                 else:
@@ -24,44 +25,60 @@ class PessoaController:
                 self.view.inicio(self.pessoa)
                 opcao = self.view.menu()
                 hasCaracteresEspeciais = TextoUtil().verificarTextoComCaracteresEspeciais(opcao)
-                if(hasCaracteresEspeciais):
-                    self.view.colocarMensagem(5)                
-                else:  
-                    if(opcao.isalpha()):
-                        self.view.colocarMensagem(1)
-                    else:
-                        if int(opcao) == 1:
-                            contatoController = ContatoController()
-                            contatoController.formulario(self.pessoa)
-                        elif int(opcao) == 2:
-                            codigo = self.validarCodigo()
-                            contatoController = ContatoController()
-                            contatoController.formulario(self.pessoa, False, codigo)
-                        elif int(opcao) == 3:
-                            codigo = self.validarCodigo(False)                    
-                            self.agenda.deletaContato(ContatoDTO(codigo, "","","",""))
-                        elif int(opcao) == 4:
-                            adicionarPessoa = AdicionarPessoasController(False)
-                            self.pessoa.nome = adicionarPessoa.pessoa.nome
-                            self.agenda.atualizarPessoa(self.pessoa)
-                        elif int(opcao) == 5:                       
-                            sair = True                                      
-                    if(opcao.isnumeric() and (int(opcao) <1 or int(opcao) > 5)):
-                        self.view.colocarMensagem(2)
+                hasCaracteresAlpha = TextoUtil().verificarTextoComAlpha(opcao)
+                if(opcao == ""):
+                    self.view.colocarMensagem(7)  
+                else:
+                    if(hasCaracteresEspeciais):
+                        self.view.colocarMensagem(5)                
+                    else:  
+                        if(opcao.isalpha() or hasCaracteresAlpha):
+                            self.view.colocarMensagem(1)
+                        else:
+                            if int(opcao) == 1:
+                                contatoController = ContatoController()
+                                contatoController.formulario(self.pessoa)
+                            elif int(opcao) == 2:
+                                codigo = self.validarCodigo()
+                                contatoController = ContatoController()
+                                contatoController.formulario(self.pessoa, False, codigo)
+                            elif int(opcao) == 3:
+                                codigo = self.validarCodigo(False)                    
+                                self.agenda.deletaContato(ContatoDTO(codigo, "","","",""))
+                            elif int(opcao) == 4:
+                                adicionarPessoa = AdicionarPessoasController(False)
+                                self.pessoa.nome = adicionarPessoa.pessoa.nome
+                                self.agenda.atualizarPessoa(self.pessoa)
+                            elif int(opcao) == 5:                       
+                                sair = True                                      
+                        if(opcao.isnumeric() and (int(opcao) <1 or int(opcao) > 5)):
+                            self.view.colocarMensagem(2)
                 
     
     def validarCodigo(self, isAlteracao:bool = True):
         codigo = "a"
         naoExisteContato = True
-        while(codigo.isalpha() or naoExisteContato):
+        hasCaracteresAlpha = True
+        hasCaracteresEspeciais = True        
+        while(codigo.isalpha() or codigo == "" or naoExisteContato or hasCaracteresAlpha or hasCaracteresEspeciais):
+            self.view.inicio(self.pessoa)
             codigo = self.view.procurarCodigo(isAlteracao)
-            if(codigo.isalpha()):
-                self.view.colocarMensagem(3)
-            for contato in self.pessoa.contatos:
-                if(int(codigo) == contato.codigo):
-                    naoExisteContato = False
-                    break
-            if(naoExisteContato):
-                self.view.colocarMensagem(4)
+            hasCaracteresEspeciais = TextoUtil().verificarTextoComCaracteresEspeciais(codigo)
+            hasCaracteresAlpha = TextoUtil().verificarTextoComAlpha(codigo)
+            if(codigo == ""):
+                self.view.colocarMensagem(7)
+            else:
+                if(hasCaracteresEspeciais):
+                    self.view.colocarMensagem(6)
+                else:    
+                    if(codigo.isalpha() or hasCaracteresAlpha):
+                        self.view.colocarMensagem(3)
+                    else:
+                        for contato in self.pessoa.contatos:
+                            if(int(codigo) == contato.codigo):
+                                naoExisteContato = False
+                                break
+                    if(naoExisteContato):
+                        self.view.colocarMensagem(4)
         return codigo
         

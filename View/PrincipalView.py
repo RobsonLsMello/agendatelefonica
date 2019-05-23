@@ -35,16 +35,25 @@ class PrincipalView:
         self.mensagem = ""
         return nome
     
+    def nenhumContatoEncontrado(self, nome:str):
+        print("Você usou o termo {}, que retornou nenhum resultado".format(nome))
+        print("Retornando ao menu principal\n\n")
+        input("Pressione a tecla \"Enter\" para continuar")
+
     def colocarMensagem(self, codigo:int):
         if codigo == 1:
-            self.mensagem += "\nCódigo deve ser númerico\n"
+            self.mensagem += "\n\tCódigo deve conter apenas números"
         elif codigo == 2:
-            self.mensagem += "\nEsse código não pertecem a pessoa alguma"
+            self.mensagem += "\n\tEsse código não pertecem a pessoa alguma"
         elif codigo == 3:
             self.mensagem += "\n\tDigite uma opção númerica"
         elif codigo == 4:
             self.mensagem += "\n\tOpção inválida"
         elif codigo == 5:
             self.mensagem += "\n\tOpção não tem Caractere(s) Especial(is)"
+        elif codigo == 6:
+            self.mensagem += "\n\tCódigo não tem Caractere(s) Especial(is)"
+        elif codigo == 7:
+            self.mensagem += "\n\tPor favor, preencha o  campo"
         else:
             self.mensagem += "\n\tErro não identificado"

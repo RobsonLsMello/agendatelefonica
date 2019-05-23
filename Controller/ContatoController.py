@@ -14,20 +14,25 @@ class ContatoController:
         tipos = self.agenda.selecionaTiposContato()
         #primeiro pedir tipo do contato
         hasCaracteresEspeciais = True
-        while(self.contato.tipoContato.codigo.isalpha() or hasCaracteresEspeciais or self.contato.tipoContato.codigo == "" or (self.contato.tipoContato.codigo.isnumeric() and (int(self.contato.tipoContato.codigo) <0 or int(self.contato.tipoContato.codigo) > len(tipos) - 1))):
+        hasCaracteresAlpha = True
+        while(self.contato.tipoContato.codigo.isalpha() or hasCaracteresEspeciais or hasCaracteresAlpha or self.contato.tipoContato.codigo == "" or (self.contato.tipoContato.codigo.isnumeric() and (int(self.contato.tipoContato.codigo) <0 or int(self.contato.tipoContato.codigo) > len(tipos) - 1))):
             self.contatoView.formulario(isCadastro)
             self.contato.tipoContato.codigo = self.contatoView.formularioTipoContato(tipos)
             hasCaracteresEspeciais = TextoUtil().verificarTextoComCaracteresEspeciais(self.contato.tipoContato.codigo)
-            if(hasCaracteresEspeciais):
-                self.contatoView.colocarMensagem(11)
+            hasCaracteresAlpha = TextoUtil().verificarTextoComAlpha(self.contato.tipoContato.codigo) 
+            if(self.contato.tipoContato.codigo == ""):
+                self.contatoView.colocarMensagem(3)
             else:
-                if(self.contato.tipoContato.codigo.isalpha()):
-                    self.contatoView.colocarMensagem(1)
+                if(hasCaracteresEspeciais):
+                    self.contatoView.colocarMensagem(11)
                 else:
-                    if(int(self.contato.tipoContato.codigo) == 0):
-                        self.continuarCadastroContatosPessoa = True            
-                    if(self.contato.tipoContato.codigo.isnumeric() and (int(self.contato.tipoContato.codigo) <0 or int(self.contato.tipoContato.codigo) > len(tipos)-1)):
-                        self.contatoView.colocarMensagem(2)
+                    if(self.contato.tipoContato.codigo.isalpha() or hasCaracteresAlpha):
+                        self.contatoView.colocarMensagem(1)
+                    else:
+                        if(int(self.contato.tipoContato.codigo) == 0):
+                            self.continuarCadastroContatosPessoa = True            
+                        if(self.contato.tipoContato.codigo.isnumeric() and (int(self.contato.tipoContato.codigo) <0 or int(self.contato.tipoContato.codigo) > len(tipos)-1)):
+                            self.contatoView.colocarMensagem(2)
         erroDeFormato = True
         while(erroDeFormato or self.contato.numero == ""):
             self.contatoView.formulario(isCadastro)
@@ -35,30 +40,40 @@ class ContatoController:
             erroDeFormato = False
             if(self.contato.numero == ""):
                 self.contatoView.colocarMensagem(3)
-            if(int(self.contato.tipoContato.codigo) == 0):
-                if(self.contato.tipoContato.codigo.isalpha()):
-                   self.contatoView.colocarMensagem(4)
-                   erroDeFormato = True
-                if(len(self.contato.numero) != 8):
-                    self.contatoView.colocarMensagem(5)
-                    erroDeFormato = True
-            elif(int(self.contato.tipoContato.codigo) == 1):
-                if(self.contato.tipoContato.codigo.isalpha()):
-                   self.contatoView.colocarMensagem(6)
-                   erroDeFormato = True
-                if(len(self.contato.numero) != 9):
-                    self.contatoView.colocarMensagem(7)
-                    erroDeFormato = True
-            elif(int(self.contato.tipoContato.codigo) == 2):
-                if(len(self.contato.numero) > 100):
-                    self.contatoView.colocarMensagem(8)
-                    erroDeFormato = True
-                if(self.contato.numero.find('.com') == -1):
-                    self.contatoView.colocarMensagem(9)
-                    erroDeFormato = True
-                if(self.contato.numero.find('@') == -1):
-                    self.contatoView.colocarMensagem(10)
-                    erroDeFormato = True        
+            else:
+                if(int(self.contato.tipoContato.codigo) == 0):
+                    if(self.contato.numero.isalpha() or TextoUtil().verificarTextoComAlpha(self.contato.numero)):
+                        self.contatoView.colocarMensagem(4)
+                        erroDeFormato = True
+                    if(len(self.contato.numero) != 10):
+                        self.contatoView.colocarMensagem(5)
+                        erroDeFormato = True
+                    if(TextoUtil().verificarTextoComCaracteresEspeciais(self.contato.numero)):
+                        self.contatoView.colocarMensagem(12)
+                        erroDeFormato = True
+                elif(int(self.contato.tipoContato.codigo) == 1):
+                    if(self.contato.numero.isalpha() or TextoUtil().verificarTextoComAlpha(self.contato.numero)):
+                        self.contatoView.colocarMensagem(6)
+                        erroDeFormato = True
+                    if(len(self.contato.numero) != 11):
+                        self.contatoView.colocarMensagem(7)
+                        erroDeFormato = True
+                    if(TextoUtil().verificarTextoComCaracteresEspeciais(self.contato.numero)):
+                        self.contatoView.colocarMensagem(13)
+                        erroDeFormato = True
+                elif(int(self.contato.tipoContato.codigo) == 2):
+                    if(len(self.contato.numero) > 100):
+                        self.contatoView.colocarMensagem(8)
+                        erroDeFormato = True
+                    if(len(self.contato.numero) < 7):
+                        self.contatoView.colocarMensagem(14)
+                        erroDeFormato = True
+                    if(self.contato.numero.find('.com') == -1):
+                        self.contatoView.colocarMensagem(9)
+                        erroDeFormato = True
+                    if(self.contato.numero.find('@') == -1):
+                        self.contatoView.colocarMensagem(10)
+                        erroDeFormato = True        
         if(isCadastro):
             self.agenda.criaContato(self.contato)
         else:
