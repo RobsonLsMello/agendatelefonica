@@ -7,15 +7,26 @@ class PrincipalView:
         
     def mostrarAgenda(self, agenda):
         os.system("cls")
-        print("\t\tAgenda dos MONSTROS\n\n")        
-        print("|Codigo     |Nome{}|".format(" "*96))
-        print("{}".format("-"*(114)))
+        print("\t\tAgenda dos MONSTROS\n\n")   
+        print("╔{}╦{}╗".format("═"*(11), "═"*(100)))  
+        print("║{:^11}║{:<100}║".format("Código", "Nome"))
+        print("╠{}╬{}╣".format("═"*(11), "═"*(100)))
         for pessoa in agenda:
-            print("|{}{}|{}{}|".format(pessoa.codigo," "*(11 - len(str(pessoa.codigo))), pessoa.nome," "*(100 - len(pessoa.nome))))
+            print("║{:^11}║{:<100}║".format(pessoa.codigo, pessoa.nome))
+        print("╚{}╩{}╝".format("═"*(11), "═"*(100))) 
+        print("\n\n") 
 
     def menu(self):        
         opcao = -1
-        print("Você deseja?\n1-Adicionar Pessoas\n2-Selecionar Pessoa\n3-Procurar Pessoa\n4-Deletar Pessoa\n5-Finalizar programa")
+        print(  "┌────────────────────────┐")
+        print(  "│Você deseja?            │\n"+
+                "├────────────────────────┤\n"
+                "│1-Adicionar Pessoas     │\n"+
+                "│2-Selecionar Pessoa     │\n"+
+                "│3-Procurar Pessoa       │\n"+
+                "│4-Deletar Pessoa        │\n"+
+                "│5-Finalizar programa    │")
+        print(  "└────────────────────────┘")
         print(self.mensagem)
         self.mensagem = ""
         opcao = input("Opção: ")
@@ -41,19 +52,20 @@ class PrincipalView:
         input("Pressione a tecla \"Enter\" para continuar")
 
     def colocarMensagem(self, codigo:int):
+        print("•")
         if codigo == 1:
-            self.mensagem += "\n\tCódigo deve conter apenas números"
+            self.mensagem += "\n\t■ Código deve conter apenas números"
         elif codigo == 2:
-            self.mensagem += "\n\tEsse código não pertecem a pessoa alguma"
+            self.mensagem += "\n\t■ Esse código não pertecem a pessoa alguma"
         elif codigo == 3:
-            self.mensagem += "\n\tDigite uma opção númerica"
+            self.mensagem += "\n\t■ Digite uma opção númerica"
         elif codigo == 4:
-            self.mensagem += "\n\tOpção inválida"
+            self.mensagem += "\n\t■ Opção inválida"
         elif codigo == 5:
-            self.mensagem += "\n\tOpção não tem Caractere(s) Especial(is)"
+            self.mensagem += "\n\t■ Opção não tem Caractere(s) Especial(is)"
         elif codigo == 6:
-            self.mensagem += "\n\tCódigo não tem Caractere(s) Especial(is)"
+            self.mensagem += "\n\t■ Código não tem Caractere(s) Especial(is)"
         elif codigo == 7:
-            self.mensagem += "\n\tPor favor, preencha o  campo"
+            self.mensagem += "\n\t■ Por favor, preencha o  campo"
         else:
-            self.mensagem += "\n\tErro não identificado"
+            self.mensagem += "\n\t■ Erro não identificado"

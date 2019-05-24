@@ -4,28 +4,30 @@ import os
 
 class PessoaView:
     def __init__(self):
-        self.mensagem = "*                                                              *"
+        self.mensagem = ""
 
     def inicio(self, pessoa:PessoaDTO):
         os.system("cls")
-        print("*"*130)
-        print("*{}{}*".format(pessoa.nome," "*(128 - len(pessoa.nome))))
-        print("*{}*".format("-"*128))
-        print("*Codigo{}|Contato{}|Tipo do Contato*".format(" "*5, " "*93))
-        print("*{}*".format("_"*128))
+        print("╔{}╗".format("═"*128))
+        print("║{:<128}║".format(pessoa.nome))
+        print("╠{}╦{}╦{}╣".format("═"*11, "═"*100, "═"*15))
+        print("║{:^11}║{:<100}║{:^15}║".format("Código", "Contato", "Tipo do Contato"))
+        print("╠{}╬{}╬{}╣".format("═"*11, "═"*100, "═"*15))
         for contato in pessoa.contatos:
-            print("*{}{}|{}{}|{}{}*".format(contato.codigo, " "*(11 - len(str(contato.codigo))), contato.numero, " "*(100 - len(str(contato.numero))), contato.tipoContato.nome," "*(15 - len(contato.tipoContato.nome))))
-        print("*{}*".format("_"*128))
+            print("║{:^11}║{:<100}║{:^15}║".format(contato.codigo, contato.numero, contato.tipoContato.nome))
+        print("╚{}╩{}╩{}╝".format("═"*11, "═"*100, "═"*15))
         print("\n\n")
-        print("*--------------------------------------------------------------*")
 
     def menu(self):
-        print("*Menu:                                                         *")
-        print("*1 - Adicionar contato                                         *")
-        print("*2 - Alterar contato                                           *")
-        print("*3 - Deletar contato                                           *")
-        print("*4 - Alterar dados Pessoais                                    *")
-        print("*5 - Voltar para a agenda                                      *")
+        print("┌──────────────────────────┐")
+        print("│Menu:                     │")
+        print("├──────────────────────────┤")
+        print("│1 - Adicionar contato     │")
+        print("│2 - Alterar contato       │")
+        print("│3 - Deletar contato       │")
+        print("│4 - Alterar dados Pessoais│")
+        print("│5 - Voltar para a agenda  │")
+        print("└──────────────────────────┘")
         print("{}".format(self.mensagem))
         self.mensagem = ""
         opcao = input("*Opção: ")
@@ -42,19 +44,20 @@ class PessoaView:
         return codigo
 
     def colocarMensagem(self, codigo:int):
+        print("•")
         if codigo == 1:
-            self.mensagem += "\n\tDigite uma opção númerica"
+            self.mensagem += "\n\t■ Digite uma opção númerica"
         elif codigo == 2:
-            self.mensagem += "\n\tOpção inválida"
+            self.mensagem += "\n\t■ Opção inválida"
         elif codigo == 3:
-            self.mensagem += "\n\tCódigo apenas pode ser númerico"
+            self.mensagem += "\n\t■ Código apenas pode ser númerico"
         elif codigo == 4:
-            self.mensagem += "\n\tCódigo de contato inválido"
+            self.mensagem += "\n\t■ Código de contato inválido"
         elif codigo == 5:
-            self.mensagem += "\n\tOpção não tem Caractere(s) Especial(is)"
+            self.mensagem += "\n\t■ Opção não tem Caractere(s) Especial(is)"
         elif codigo == 6:
-            self.mensagem += "\n\tCódigo não tem Caractere(s) Especial(is)"
+            self.mensagem += "\n\t■ Código não tem Caractere(s) Especial(is)"
         elif codigo == 7:
-            self.mensagem += "\n\tPor favor, preencha o  campo"
+            self.mensagem += "\n\t■ Por favor, preencha o  campo"
         else:
-            self.mensagem += "\n\tErro não identificado" 
+            self.mensagem += "\n\t■ Erro não identificado" 

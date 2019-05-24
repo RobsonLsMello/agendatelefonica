@@ -9,48 +9,48 @@ class ContatoView:
 
     def formulario(self, isCadastro:bool):
         os.system("cls")
-        print("_______________________________________________")
+        print("╔═════════════════════════════════════════════╗")
         if(isCadastro):
-            print("|Formulário de cadastro de um Contato:        |")
+            print("║Formulário de cadastro de um Contato:        ║")
         else:
-            print("|Formulário de Alteração de um Contato:       |")            
-        print("|                                             |")
+            print("║Formulário de Alteração de um Contato:       ║")            
+        print("║                                             ║")
     
 
     def formularioTipoContato(self, tipos:list):
-        print("|Selecione o tipo de contato:                 |")
+        print("║Selecione o tipo de contato:                 ║")
         for tipo in  tipos:
-            print("|{} - {} \t\t\t\t      |".format(tipo.codigo, tipo.nome))
+            print("║{} - {} \t\t\t\t      ║".format(tipo.codigo, tipo.nome))
         print(self.mensagem)
-        opcao  = input("|Tipo: ")
-        print("_______________________________________________")   
+        opcao  = input("║Tipo: ")
+        print("╚═════════════════════════════════════════════╝")   
         self.mensagem = ""
         return opcao
 
     def formularioNumero(self, tipo:int):
         if int(tipo) == 0:
-            print("|Digite um número de telefone                 |")
-            print("|Formato do telefone:                         |")
-            print("|*Sem DDI                                     |")
-            print("|*Com 10 digitos, ex: 1330302041              |")
-            print("|                                             |")
+            print("║Digite um número de telefone                 ║")
+            print("║Formato do telefone:                         ║")
+            print("║*Sem DDI                                     ║")
+            print("║*Com 10 digitos, ex: 1330302041              ║")
+            print("║                                             ║")
         elif int(tipo) == 1:
-            print("|Digite um número de celular                  |")
-            print("|Formato do celular:                          |")
-            print("|*Sem DDI                                     |")
-            print("|*Com 11 digitos, ex: 13996202020             |")
-            print("|                                             |")
+            print("║Digite um número de celular                  ║")
+            print("║Formato do celular:                          ║")
+            print("║*Sem DDI                                     ║")
+            print("║*Com 11 digitos, ex: 13996202020             ║")
+            print("║                                             ║")
         elif int(tipo) == 2:
-            print("|Digite um endereço de email                  |")
-            print("|Formato do email:                            |")
-            print("|*Com até 100 caracteres                      |")
-            print("|*ex: seuEmail@dominio.com                    |")
-            print("|                                             |")
+            print("║Digite um endereço de email                  ║")
+            print("║Formato do email:                            ║")
+            print("║*Com até 100 caracteres                      ║")
+            print("║*ex: seuEmail@dominio.com                    ║")
+            print("║                                             ║")
         else:
-            print("|Digite um dado de contato                    |")
+            print("║Digite um dado de contato                    ║")
         print(self.mensagem)
-        nome = input("|Dado: ")
-        print("_______________________________________________")   
+        nome = input("║Dado: ")
+        print("╚═════════════════════════════════════════════╝")   
         self.mensagem = ""     
         return nome
 

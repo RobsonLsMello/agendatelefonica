@@ -5,10 +5,12 @@ class TextoUtil:
 
     def verificarTextoComCaracteresEspeciais(self, texto:str):
         caracteresEspeciaisEmAscii = []
+        caracteresEspeciaisEmAscii.append([0,31])
         caracteresEspeciaisEmAscii.append([33,47])
         caracteresEspeciaisEmAscii.append([58,64])
         caracteresEspeciaisEmAscii.append([91,96])
         caracteresEspeciaisEmAscii.append([123,126])
+        caracteresEspeciaisEmAscii.append([127,255])
         temCaracteresEspeciais = False
         for y in caracteresEspeciaisEmAscii:
             for x in range(y[0], y[1] + 1, 1):
