@@ -6,82 +6,85 @@ import os
 class ContatoView:
     def __init__(self):
         self.mensagem = ""
+        self.erros = 0
 
     def formulario(self, isCadastro:bool):
         os.system("cls")
-        print("╔═════════════════════════════════════════════╗")
+        print("╔══════════════════════════════════════════════════════════╗")
         if(isCadastro):
-            print("║Formulário de cadastro de um Contato:        ║")
+            print("║Formulário de cadastro de um Contato:                     ║")
         else:
-            print("║Formulário de Alteração de um Contato:       ║")            
-        print("║                                             ║")
+            print("║Formulário de Alteração de um Contato:                    ║")            
+        print("║                                                          ║")
     
 
     def formularioTipoContato(self, tipos:list):
-        print("║Selecione o tipo de contato:                 ║")
+        print("║Selecione o tipo de contato:                              ║")
         for tipo in  tipos:
-            print("║{} - {} \t\t\t\t      ║".format(tipo.codigo, tipo.nome))
-        print(self.mensagem)
-        opcao  = input("║Tipo: ")
-        print("╚═════════════════════════════════════════════╝")   
-        self.mensagem = ""
+            print("║{} - {} \t\t\t\t                   ║".format(tipo.codigo, tipo.nome))
+        if self.mensagem != "":
+            print(self.mensagem)        
+        opcao  = input("║Tipo: ")        
+        print("╠══════════════════════════════════════════════════════════╣")  
+        self.mensagem = ""     
+        self.erro = 0 
         return opcao
 
     def formularioNumero(self, tipo:int):
         if int(tipo) == 0:
-            print("║Digite um número de telefone                 ║")
-            print("║Formato do telefone:                         ║")
-            print("║*Sem DDI                                     ║")
-            print("║*Com 10 digitos, ex: 1330302041              ║")
-            print("║                                             ║")
+            print("║Digite um número de telefone                              ║")
+            print("║Formato do telefone:                                      ║")
+            print("║*Sem DDI                                                  ║")
+            print("║*Com 10 digitos, ex: 1330302041                           ║")
+
         elif int(tipo) == 1:
-            print("║Digite um número de celular                  ║")
-            print("║Formato do celular:                          ║")
-            print("║*Sem DDI                                     ║")
-            print("║*Com 11 digitos, ex: 13996202020             ║")
-            print("║                                             ║")
+            print("║Digite um número de celular                               ║")
+            print("║Formato do celular:                                       ║")
+            print("║*Sem DDI                                                  ║")
+            print("║*Com 11 digitos, ex: 13996202020                          ║")
         elif int(tipo) == 2:
-            print("║Digite um endereço de email                  ║")
-            print("║Formato do email:                            ║")
-            print("║*Com até 100 caracteres                      ║")
-            print("║*ex: seuEmail@dominio.com                    ║")
-            print("║                                             ║")
+            print("║Digite um endereço de email                               ║")
+            print("║Formato do email:                                         ║")
+            print("║*Com até 100 caracteres                                   ║")
+            print("║*ex: seuEmail@dominio.com                                 ║")
         else:
-            print("║Digite um dado de contato                    ║")
-        print(self.mensagem)
+            print("║Digite um dado de contato                                 ║")
+        if self.mensagem != "":
+            print(self.mensagem)
+        print("║                                                          ║")
         nome = input("║Dado: ")
-        print("╚═════════════════════════════════════════════╝")   
-        self.mensagem = ""     
+        print("╠══════════════════════════════════════════════════════════╣")   
+        self.mensagem = ""  
+        self.erro = 0   
         return nome
+    
+    def mensagemSucesso(self):
+        print("║Contato cadastrado com sucesso!                           ║")
+        print("╚══════════════════════════════════════════════════════════╝")
+        os.system("Pause")   
+        
 
     def colocarMensagem(self, codigo:int):
-        if codigo == 1:
-            self.mensagem += "\n\tDigite uma opção númerica"
-        elif codigo == 2:
-            self.mensagem += "\n\tOpção inválida"
-        elif codigo == 3:
-            self.mensagem += "\n\tPor favor, preencha o  campo"
-        elif codigo == 4:
-            self.mensagem += "\n\tUm telefone é composto apenas por números"
-        elif codigo == 5:
-            self.mensagem += "\n\tUm telefone deve ter 10 digitos"
-        elif codigo == 6:
-            self.mensagem += "\n\tUm celular é composto apenas por números"
-        elif codigo == 7:
-            self.mensagem += "\n\tUm celular deve ter 11 digitos"
-        elif codigo == 8:
-            self.mensagem += "\n\tContato pode ter até 100 caracteres"
-        elif codigo == 9:
-            self.mensagem += "\n\tUm email precisa conter ao menos 1 \".com\""
-        elif codigo == 10:
-            self.mensagem += "\n\tUm email precisa conter ao menos 1 \"@\""
-        elif codigo == 11:
-            self.mensagem += "\n\tTipo de Contato não tem Caractere(s) Especial(is)"
-        elif codigo == 12:
-            self.mensagem += "\n\tTelefone não tem Caractere(s) Especial(is)"
-        elif codigo == 13:
-            self.mensagem += "\n\tCelular não tem Caractere(s) Especial(is)"
-        elif codigo == 14: #a@a.com
-            self.mensagem += "\n\tEmail deve ter ao menos 7 caracteres"
+        if self.erro != 0:
+            self.mensagem += "\n"
         else:
-            self.mensagem += "\n\tErro não identificado" 
+            self.mensagem += "║\t                                                   ║\n"
+        if codigo == 1:
+            self.mensagem += "║\t■ Digite uma opção númerica                        ║"            
+        elif codigo == 2:
+            self.mensagem += "║\t■ Opção inválida                                   ║"
+        elif codigo == 3:
+            self.mensagem += "║\t■ Por favor, preencha o campo                      ║"
+        elif codigo == 4:
+            self.mensagem += "║\t■ Um telefone é composto apenas por números        ║"
+        elif codigo == 5:
+            self.mensagem += "║\t■ Um telefone deve ter 10(dez) digitos             ║"
+        elif codigo == 6:
+            self.mensagem += "║\t■ tUm celular é composto apenas por números        ║"
+        elif codigo == 7:
+            self.mensagem += "║\t■ Um celular deve ter 11(onze) digitos             ║"
+        elif codigo == 8:
+            self.mensagem += "║\t■ Contato pode ter até 100(cem) caracteres         ║"
+        else:
+            self.mensagem += "║\t■ Erro não identificado                            ║" 
+        self.erro = self.erro + 1

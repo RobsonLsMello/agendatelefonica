@@ -1,10 +1,12 @@
 from Controller.PrincipalController import PrincipalController
+from Controller.LoginController import LoginController
 import os
 
 class Sistema:
     def __init__(self):
         self.definirTela()
-        principal = PrincipalController()
+        login = LoginController()
+        login.index()
     
     def definirTela(self):
         os.system("title Agenda de Python")

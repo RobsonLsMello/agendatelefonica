@@ -1,11 +1,12 @@
 from Model.DTO.PessoaDTO import PessoaDTO
+from Model.DTO.UsuarioDTO import UsuarioDTO
 import os
 
 class PrincipalView:
     def __init__(self):
         self.mensagem = ""
         
-    def mostrarAgenda(self, agenda):
+    def mostrarAgenda(self, agenda, usuario:UsuarioDTO = UsuarioDTO("","")):
         os.system("cls")
         print("\t\tAgenda dos MONSTROS\n\n")   
         print("╔{}╦{}╗".format("═"*(11), "═"*(100)))  
@@ -25,7 +26,7 @@ class PrincipalView:
                 "│2-Selecionar Pessoa     │\n"+
                 "│3-Procurar Pessoa       │\n"+
                 "│4-Deletar Pessoa        │\n"+
-                "│5-Finalizar programa    │")
+                "│5-Voltar                │\n")
         print(  "└────────────────────────┘")
         print(self.mensagem)
         self.mensagem = ""

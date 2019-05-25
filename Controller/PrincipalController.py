@@ -4,9 +4,10 @@ from Model.DAO.AgendaDAO import AgendaDAO
 from Controller.AdicionarPessoasController import AdicionarPessoasController
 from Controller.PessoaController import PessoaController
 from Lib.TextoUtil import TextoUtil
+from Model.DTO.UsuarioDTO import UsuarioDTO
 
 class PrincipalController:
-    def __init__(self):
+    def __init__(self, usuario:UsuarioDTO = UsuarioDTO("","")):
         principal = PrincipalView()
         agenda = AgendaDAO()
         sair = False

@@ -3,6 +3,7 @@ from Model.DTO.PessoaDTO import PessoaDTO
 from View.ContatoView import ContatoView
 from Model.DAO.AgendaDAO import AgendaDAO
 from Lib.TextoUtil import TextoUtil
+from Lib.Validador import Validador
 
 class ContatoController:
     def __init__(self):
@@ -62,18 +63,13 @@ class ContatoController:
                         self.contatoView.colocarMensagem(13)
                         erroDeFormato = True
                 elif(int(self.contato.tipoContato.codigo) == 2):
-                    if(len(self.contato.numero) > 100):
-                        self.contatoView.colocarMensagem(8)
-                        erroDeFormato = True
-                    if(len(self.contato.numero) < 7):
-                        self.contatoView.colocarMensagem(14)
-                        erroDeFormato = True
-                    if(self.contato.numero.find('.com') == -1):
-                        self.contatoView.colocarMensagem(9)
-                        erroDeFormato = True
-                    if(self.contato.numero.find('@') == -1):
-                        self.contatoView.colocarMensagem(10)
-                        erroDeFormato = True        
+                    tuplaDeErro = Validador().validarEmail(self.contato.numero)
+                    erroDeFormato = tuplaDeErro[0]
+                    self.contatoView.mensagem += tuplaDeErro[1]
+        self.contatoView.mensagemSucesso()
+            
+                            
+
         if(isCadastro):
             self.agenda.criaContato(self.contato)
         else:
