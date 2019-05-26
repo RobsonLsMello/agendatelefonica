@@ -44,8 +44,13 @@ class AgendaDAO(DAO):
         self.conexao.execute("delete from tb_contato where cd_contato = \"{}\"".format(contato.codigo))
         self.conexao.commit()
 
-    def selecionaContato(self, pessoa:PessoaDTO):
-        contatosSelecionados = self.conexao.execute("Select c.cd_contato, c.ds_contato, t.nm_tipo_contato from tb_contato as c join tb_tipo_contato as t on c.cd_tipo_contato = t.cd_tipo_contato where c.cd_pessoa = {}".format(pessoa.codigo)).fetchall()
+    def selecionaContato(self, pessoa:PessoaDTO, opcao:int = 0):
+        if   opcao == 1:
+            contatosSelecionados = self.conexao.execute("Select c.cd_contato, c.ds_contato, t.nm_tipo_contato from tb_contato as c join tb_tipo_contato as t on c.cd_tipo_contato = t.cd_tipo_contato where c.cd_pessoa = {} and c.cd_tipo_contato = 2".format(pessoa.codigo)).fetchall()
+        elif opcao == 2:
+            contatosSelecionados = self.conexao.execute("Select c.cd_contato, c.ds_contato, t.nm_tipo_contato from tb_contato as c join tb_tipo_contato as t on c.cd_tipo_contato = t.cd_tipo_contato where c.cd_contato = {}".format(pessoa.codigo)).fetchall()
+        elif opcao == 0:
+            contatosSelecionados = self.conexao.execute("Select c.cd_contato, c.ds_contato, t.nm_tipo_contato from tb_contato as c join tb_tipo_contato as t on c.cd_tipo_contato = t.cd_tipo_contato where c.cd_pessoa = {}".format(pessoa.codigo)).fetchall()
         contatos = []
         for contatoEncontrado in contatosSelecionados:
             contatos.append(ContatoDTO(contatoEncontrado[0], contatoEncontrado[1], 0, contatoEncontrado[2], pessoa.codigo))

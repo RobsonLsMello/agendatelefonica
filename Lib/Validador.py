@@ -57,7 +57,9 @@ class Validador:
             self.mensagem += "\n"
         else:
             self.mensagem += "║\t                                                   ║\n"
-        if codigo == 9:
+        if codigo == 8:
+            self.mensagem += "║\t■ Contato pode ter até 100(cem) caracteres         ║"
+        elif codigo == 9:
             self.mensagem += "║\t■ Um email precisa conter ao menos 1(um) \".\"       ║"
         elif codigo == 10:
             self.mensagem += "║\t■ Um email precisa conter ao menos 1(um) \"@\"       ║"

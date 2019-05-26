@@ -3,17 +3,35 @@ from Model.DTO.UsuarioDTO import UsuarioDTO
 import os
 
 class PrincipalView:
-    def __init__(self):
+    def __init__(self, usuario:UsuarioDTO = UsuarioDTO("","")):
         self.mensagem = ""
+        self.usuario = usuario
         
-    def mostrarAgenda(self, agenda, usuario:UsuarioDTO = UsuarioDTO("","")):
+    def mostrarAgenda(self, agenda):
         os.system("cls")
-        print("\t\tAgenda dos MONSTROS\n\n")   
-        print("╔{}╦{}╗".format("═"*(11), "═"*(100)))  
-        print("║{:^11}║{:<100}║".format("Código", "Nome"))
-        print("╠{}╬{}╣".format("═"*(11), "═"*(100)))
-        for pessoa in agenda:
-            print("║{:^11}║{:<100}║".format(pessoa.codigo, pessoa.nome))
+        print("\t\tAgenda dos MONSTROS\n\n")
+        arrayLogin = []
+        arrayLogin.append("┌{}┐".format("─"*len(self.usuario.email)))
+        arrayLogin.append("│{}{}│".format("Gmail Conectado:"," "*(len(self.usuario.email) - 16)))
+        arrayLogin.append("├{}┤".format("─"*len(self.usuario.email)))
+        arrayLogin.append("│{}│".format(self.usuario.email))
+        arrayLogin.append("└{}┘".format("─"*len(self.usuario.email)))
+        if(len(agenda) < 2 or self.usuario.logado == False):
+            if(self.usuario.logado):    
+                for itemLogin in arrayLogin:
+                    print(itemLogin)
+            print("╔{}╦{}╗".format("═"*(11), "═"*(100)))  
+            print("║{:^11}║{:<100}║".format("Código", "Nome"))
+            print("╠{}╬{}╣".format("═"*(11), "═"*(100)))   
+        else:                   
+            print("╔{}╦{}╗  {}".format("═"*(11), "═"*(100), arrayLogin[0]))  
+            print("║{:^11}║{:<100}║  {}".format("Código", "Nome", arrayLogin[1]))
+            print("╠{}╬{}╣  {}".format("═"*(11), "═"*(100), arrayLogin[2]))        
+        for indice, pessoa in enumerate(agenda):
+            if(indice <2 and self.usuario.logado):
+                print("║{:^11}║{:<100}║  {}".format(pessoa.codigo, pessoa.nome, arrayLogin[3 + indice]))
+            else:
+                print("║{:^11}║{:<100}║".format(pessoa.codigo, pessoa.nome))
         print("╚{}╩{}╝".format("═"*(11), "═"*(100))) 
         print("\n\n") 
 
@@ -26,7 +44,7 @@ class PrincipalView:
                 "│2-Selecionar Pessoa     │\n"+
                 "│3-Procurar Pessoa       │\n"+
                 "│4-Deletar Pessoa        │\n"+
-                "│5-Voltar                │\n")
+                "│5-Voltar                │")
         print(  "└────────────────────────┘")
         print(self.mensagem)
         self.mensagem = ""

@@ -8,7 +8,8 @@ from Model.DTO.UsuarioDTO import UsuarioDTO
 
 class PrincipalController:
     def __init__(self, usuario:UsuarioDTO = UsuarioDTO("","")):
-        principal = PrincipalView()
+        principal = PrincipalView(usuario)
+        self.usuario = usuario
         agenda = AgendaDAO()
         sair = False
         while sair == False:
@@ -36,7 +37,7 @@ class PrincipalController:
                                 principal.colocarMensagem(3)
                             else:
                                 if int(opcao) == 1:
-                                    pessoaController = PessoaController()
+                                    pessoaController = PessoaController(self.usuario)
                                     adicionarPessoas = AdicionarPessoasController()
                                     agenda.criaPessoa(adicionarPessoas.pessoa)      
                                     if adicionarPessoas.continuarCadastroContatosPessoa == True:      
@@ -86,7 +87,7 @@ class PrincipalController:
                     if(naoTemPessoa):
                         principal.colocarMensagem(2)
         if(isDeletar == False):
-            pessoaController = PessoaController()
+            pessoaController = PessoaController(self.usuario)
             pessoaController.index(PessoaDTO(codigo,"", "") ,False)
         return codigo
 

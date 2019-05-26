@@ -83,8 +83,7 @@ class ContatoView:
             self.mensagem += "║\t■ tUm celular é composto apenas por números        ║"
         elif codigo == 7:
             self.mensagem += "║\t■ Um celular deve ter 11(onze) digitos             ║"
-        elif codigo == 8:
-            self.mensagem += "║\t■ Contato pode ter até 100(cem) caracteres         ║"
+        
         else:
             self.mensagem += "║\t■ Erro não identificado                            ║" 
         self.erro = self.erro + 1

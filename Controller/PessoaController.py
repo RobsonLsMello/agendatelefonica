@@ -5,11 +5,14 @@ from View.PessoaView import PessoaView
 from Controller.AdicionarPessoasController import AdicionarPessoasController
 from Controller.ContatoController import ContatoController
 from Lib.TextoUtil import TextoUtil
+from Model.DTO.UsuarioDTO import UsuarioDTO
+from Lib.EnviarEmail import EnviarEmail
 
 class PessoaController:
-    def __init__(self):
-        self.view = PessoaView()
+    def __init__(self,usuario:UsuarioDTO = UsuarioDTO("","")):
+        self.view = PessoaView(usuario)
         self.agenda = AgendaDAO()
+        self.usuario = usuario
 
     def index(self, pessoa:PessoaDTO, continuarCadastroContatosPessoa:bool):        
         sair = False
@@ -17,7 +20,7 @@ class PessoaController:
             opcao = "a"   
             hasCaracteresEspeciais = True  
             hasCaracteresAlpha = True   
-            while(opcao.isalpha() or opcao == "" or hasCaracteresEspeciais or hasCaracteresAlpha or (opcao.isnumeric() and (int(opcao) <1 or int(opcao) > 5))):
+            while(opcao.isalpha() or opcao == "" or hasCaracteresEspeciais or hasCaracteresAlpha or (opcao.isnumeric() and (int(opcao) <1 or int(opcao) > 6))):
                 if(continuarCadastroContatosPessoa):
                     self.pessoa = self.agenda.selecionaContato(self.agenda.selecionaPessoa("", True)[0])
                 else:
@@ -43,26 +46,47 @@ class PessoaController:
                                 contatoController = ContatoController()
                                 contatoController.formulario(self.pessoa, False, codigo)
                             elif int(opcao) == 3:
-                                codigo = self.validarCodigo(False)                    
+                                codigo = self.validarCodigo(0)                    
                                 self.agenda.deletaContato(ContatoDTO(codigo, "","","",""))
                             elif int(opcao) == 4:
                                 adicionarPessoa = AdicionarPessoasController(False)
                                 self.pessoa.nome = adicionarPessoa.pessoa.nome
                                 self.agenda.atualizarPessoa(self.pessoa)
                             elif int(opcao) == 5:                       
-                                sair = True                                      
-                        if(opcao.isnumeric() and (int(opcao) <1 or int(opcao) > 5)):
+                                sair = True
+                            elif int(opcao) == 6:                       
+                                if(self.usuario.logado):
+                                    self.pessoa = self.agenda.selecionaContato(self.pessoa, 1)
+                                    self.enviarEmail(self.validarCodigo(2))
+                                    
+                                else:
+                                    self.view.erroEnviarEmail()                                   
+                        if(opcao.isnumeric() and (int(opcao) <1 or int(opcao) > 6)):
                             self.view.colocarMensagem(2)
                 
-    
-    def validarCodigo(self, isAlteracao:bool = True):
+    def enviarEmail(self, codigo:int):
+        novaPessoa = PessoaDTO(codigo, "", "")
+        self.pessoa = self.agenda.selecionaContato(novaPessoa, 2)
+        dados = self.view.formularioEmail(self.pessoa.contatos[0])
+        try:
+            envioDeEmail = EnviarEmail()
+            envioDeEmail.setDadosDestinario(self.pessoa.contatos[0].numero, dados[0])
+            envioDeEmail.setDadosRemetente(self.usuario)
+            envioDeEmail.setMensagem(dados[1])
+            envioDeEmail.enviarEmail()
+            input("Enviado com Sucesso")
+        except Exception:
+            input("Falha no envio, favor verificar o email do destinatário")
+        
+
+    def validarCodigo(self, opcao:int = 1):
         codigo = "a"
         naoExisteContato = True
         hasCaracteresAlpha = True
         hasCaracteresEspeciais = True        
         while(codigo.isalpha() or codigo == "" or naoExisteContato or hasCaracteresAlpha or hasCaracteresEspeciais):
             self.view.inicio(self.pessoa)
-            codigo = self.view.procurarCodigo(isAlteracao)
+            codigo = self.view.procurarCodigo(opcao)
             hasCaracteresEspeciais = TextoUtil().verificarTextoComCaracteresEspeciais(codigo)
             hasCaracteresAlpha = TextoUtil().verificarTextoComAlpha(codigo)
             if(codigo == ""):
