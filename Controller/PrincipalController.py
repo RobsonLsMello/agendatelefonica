@@ -50,7 +50,7 @@ class PrincipalController:
                                     pessoasPorNome = agenda.selecionaPessoa(nome, False)
                                     if(len(pessoasPorNome) > 0):
                                         principal.mostrarAgenda(pessoasPorNome)
-                                        self.procurarPessoasPorCodigo(pessoas, principal, True)
+                                        self.procurarPessoasPorCodigo(pessoasPorNome, principal, True)
                                     else:
                                         principal.nenhumContatoEncontrado(nome)
                                 elif int(opcao) == 4:

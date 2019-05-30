@@ -37,10 +37,10 @@ class LoginController:
                                 if(int(opcao) == 1):
                                     self.acessarContaGmail()
                                 elif(int(opcao) == 3):
-                                    sair == True
+                                    sair = True
             if(sair == False):
                 principal = PrincipalController(self.usuarioDTO)
-                pass
+            
 
     def acessarContaGmail(self):
         sair = False
